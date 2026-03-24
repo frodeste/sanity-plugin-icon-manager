@@ -67,11 +67,8 @@ export const filterCollections = (
           collection.author.name.toLowerCase().includes(lowerCaseSearchTerm) ||
           collection.name.toLowerCase().includes(lowerCaseSearchTerm),
       )
-      if (filtered.length > 0) {
-        if (!acc) acc = {}
-        acc[group] = filtered
-      }
-      return acc
+      if (filtered.length === 0) return acc
+      return {...(acc ?? {}), [group]: filtered}
     },
     undefined as Record<string, IconifyInfoEnhanced[]> | undefined,
   )

@@ -48,7 +48,15 @@ const useInputSetup = (
       setInlineSvg(value.metadata.inlineSvg)
       if (value.metadata.color) setColor(value.metadata.color?.hex)
     }
-  }, [objectInputProps.value])
+  }, [
+    objectInputProps.value,
+    setSanityValue,
+    setFlip,
+    setRotate,
+    updateSize,
+    setInlineSvg,
+    setColor,
+  ])
 
   useEffect(() => {
     setSanityFieldPath(objectInputProps.path)
@@ -60,7 +68,22 @@ const useInputSetup = (
     if (pluginOptions?.customPalette) setPluginOptionCustomPalette(pluginOptions.customPalette)
     if (pluginOptions?.availableCollections)
       setAvailableCollectionsOption(pluginOptions.availableCollections)
-  }, [])
+  }, [
+    objectInputProps.path,
+    objectInputProps.onChange,
+    objectInputProps.onPathFocus,
+    sanityToast,
+    pluginOptions?.customEndpoint,
+    pluginOptions?.customPalette,
+    pluginOptions?.availableCollections,
+    setSanityFieldPath,
+    setSanityPatch,
+    setSanityPathFocus,
+    setSanityToast,
+    setIconifyEndpoint,
+    setPluginOptionCustomPalette,
+    setAvailableCollectionsOption,
+  ])
 }
 
 export default useInputSetup
