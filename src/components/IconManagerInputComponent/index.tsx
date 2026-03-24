@@ -1,4 +1,4 @@
-import {useMediaIndex, useTheme} from '@sanity/ui'
+import {useTheme} from '@sanity/ui'
 import {ReactNode} from 'react'
 import {ObjectInputProps} from 'sanity'
 import {ThemeProvider} from 'styled-components'
@@ -12,11 +12,10 @@ export default function IconManagerInputComponentWrapper(
   objectInputProps: ObjectInputProps<IconManagerType>,
   pluginOptions: void | IconManagerPluginOptions,
 ): ReactNode {
-  const {sanity: theme} = useTheme()
-  const mediaIndex = useMediaIndex()
+  const theme = useTheme()
   return (
     <AppStoreContextProvider>
-      <ThemeProvider theme={{...theme, mediaIndex}}>
+      <ThemeProvider theme={theme}>
         <IconManagerInputComponent
           objectInputProps={objectInputProps}
           pluginOptions={pluginOptions}

@@ -4,9 +4,9 @@ import {RefObject, useEffect, useRef, useState} from 'react'
 
 export default function useIsInViewport<T extends Element>(
   options: IntersectionObserverInit = {},
-): {ref: RefObject<T>; elementHitViewport: boolean} {
+): {ref: RefObject<T | null>; elementHitViewport: boolean} {
   const [elementHitViewport, setElementHitViewport] = useState(false)
-  const ref = useRef<T>(null)
+  const ref = useRef<T | null>(null)
 
   useEffect(() => {
     if (elementHitViewport || !ref.current) return

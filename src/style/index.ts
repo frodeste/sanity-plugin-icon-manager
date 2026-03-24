@@ -1,5 +1,8 @@
 import {Badge, Card, Flex, Text} from '@sanity/ui'
-import styled from 'styled-components'
+import styled, {css} from 'styled-components'
+
+/** Matches legacy `mediaIndex < 2` from @sanity/ui useMediaIndex (first two breakpoints). */
+const belowBreakpoint1 = (media: number[]) => media[1] - 1
 
 export const PaginationButton = styled.button`
   border: none;
@@ -96,7 +99,7 @@ export const StyledColorPaletteWrapper = styled.div`
   margin-bottom: 10px;
   border-radius: 2px;
   max-width: 272px;
-  background-color: ${(p) => p.theme.color.base.border};
+  background-color: ${(p) => p.theme.sanity.color.base.border};
 `
 
 interface StyledColorPaletteBoxProps {
@@ -108,7 +111,7 @@ export const StyledColorPaletteBox = styled.button<StyledColorPaletteBoxProps>`
   border-radius: 2px;
   background: ${(p) => p.$bgColor};
   cursor: pointer;
-  border: 1px solid ${(p) => p.theme.color.base.fg};
+  border: 1px solid ${(p) => p.theme.sanity.color.base.fg};
 `
 // ###
 // COLOR PICKER UI
@@ -117,42 +120,117 @@ export const StyledColorPaletteBox = styled.button<StyledColorPaletteBoxProps>`
 // ###
 // ICON MENU
 // ###
-const isMobile = (mediaIndex: number) => mediaIndex < 2
-
 const StyledBaseLeftIconMenu = styled(Flex)`
-  width: ${(props) => (isMobile(props.theme.mediaIndex) ? '100%' : '350px')};
+  ${(props) => {
+    const m = props.theme.sanity.media
+    const b = belowBreakpoint1(m)
+    return css`
+      width: 350px;
+      @media screen and (max-width: ${b}px) {
+        width: 100%;
+      }
+    `
+  }}
 `
 const StyledBaseRightIconMenu = styled(Flex)`
-  width: ${(props) => (isMobile(props.theme.mediaIndex) ? '100%' : '150px')};
+  ${(props) => {
+    const m = props.theme.sanity.media
+    const b = belowBreakpoint1(m)
+    return css`
+      width: 150px;
+      @media screen and (max-width: ${b}px) {
+        width: 100%;
+      }
+    `
+  }}
 `
 
 export const StyledIconMenu = styled(Flex)`
-  width: ${(props) => (isMobile(props.theme.mediaIndex) ? '250px' : '490px')};
-  box-sizing: content-box;
+  ${(props) => {
+    const m = props.theme.sanity.media
+    const b = belowBreakpoint1(m)
+    return css`
+      width: 490px;
+      box-sizing: content-box;
+      @media screen and (max-width: ${b}px) {
+        width: 250px;
+      }
+    `
+  }}
 `
 
 export const StyledIconMenuInfoTitleWrapper = styled(StyledBaseLeftIconMenu)`
-  order: ${(props) => (isMobile(props.theme.mediaIndex) ? 1 : 'unset')};
+  ${(props) => {
+    const m = props.theme.sanity.media
+    const b = belowBreakpoint1(m)
+    return css`
+      @media screen and (max-width: ${b}px) {
+        order: 1;
+      }
+    `
+  }}
 `
 
 export const StyledIconMenuActionsTitleWrapper = styled(StyledBaseRightIconMenu)`
-  order: ${(props) => (isMobile(props.theme.mediaIndex) ? 3 : 'unset')};
+  ${(props) => {
+    const m = props.theme.sanity.media
+    const b = belowBreakpoint1(m)
+    return css`
+      @media screen and (max-width: ${b}px) {
+        order: 3;
+      }
+    `
+  }}
 `
 
 export const StyledIconMenuInfoWrapper = styled(StyledBaseLeftIconMenu)`
-  order: ${(props) => (isMobile(props.theme.mediaIndex) ? 2 : 'unset')};
+  ${(props) => {
+    const m = props.theme.sanity.media
+    const b = belowBreakpoint1(m)
+    return css`
+      @media screen and (max-width: ${b}px) {
+        order: 2;
+      }
+    `
+  }}
 `
 
 export const StyledIconMenuInfoCard = styled(Card)`
-  width: ${(props) => (isMobile(props.theme.mediaIndex) ? '100%' : '98%')};
+  ${(props) => {
+    const m = props.theme.sanity.media
+    const b = belowBreakpoint1(m)
+    return css`
+      width: 98%;
+      @media screen and (max-width: ${b}px) {
+        width: 100%;
+      }
+    `
+  }}
 `
 
 export const StyledIconMenuActionsWrapper = styled(StyledBaseRightIconMenu)`
-  order: ${(props) => (isMobile(props.theme.mediaIndex) ? 4 : 'unset')};
+  ${(props) => {
+    const m = props.theme.sanity.media
+    const b = belowBreakpoint1(m)
+    return css`
+      @media screen and (max-width: ${b}px) {
+        order: 4;
+      }
+    `
+  }}
 `
 
 export const StyledIconMenuInfoValue = styled(Text)`
-  width: ${(props) => (isMobile(props.theme.mediaIndex) ? '100%' : '250px')};
+  ${(props) => {
+    const m = props.theme.sanity.media
+    const b = belowBreakpoint1(m)
+    return css`
+      width: 250px;
+      @media screen and (max-width: ${b}px) {
+        width: 100%;
+      }
+    `
+  }}
 `
 // ###
 // ICON MENU

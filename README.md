@@ -34,12 +34,16 @@ Powered by [Iconify](https://iconify.design/)
 ## 🚨 Requirements
 
 - Node 18+
-- Sanity Studio 3.23.0+ (to support [i18n features](https://www.sanity.io/docs/internationalizing-plugins-ui))
+- Sanity Studio 5+
+- React 19 and `styled-components` 6.x (aligned with [Sanity Studio 5](https://www.sanity.io/) peer dependencies)
+
+For internationalized plugin UI, follow [Internationalizing plugins UI](https://www.sanity.io/docs/internationalizing-plugins-ui).
+
   <br /><br />
 
 ## ⚡️ Features
 
-- Sanity v3 plugin
+- Sanity Studio 5 plugin (`definePlugin`)
 - Customizable icons
 - SVG code stored in Sanity
 - Media preview component for your entry

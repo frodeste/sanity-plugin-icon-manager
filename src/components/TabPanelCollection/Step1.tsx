@@ -25,16 +25,14 @@ export default function Step1(): ReactNode {
           ←
         </Box>
         <Flex gap={2} marginTop={2} justify='center'>
-          {selectedCollection?.collection.samples
-            ?.slice(0, 3)
-            .map((sample) => (
-              <Icon
-                key={`${selectedCollection?.collection.code}:${sample}`}
-                icon={`${selectedCollection?.collection.code}:${sample}`}
-                width={22}
-                height={22}
-              />
-            ))}
+          {selectedCollection?.collection.samples?.slice(0, 3).map((sample) => (
+            <Icon
+              key={`${selectedCollection?.collection.code}:${sample}`}
+              icon={`${selectedCollection?.collection.code}:${sample}`}
+              width={22}
+              height={22}
+            />
+          ))}
         </Flex>
         <Flex align='center' direction='column' gap={3}>
           <Text weight='bold' size={4}>

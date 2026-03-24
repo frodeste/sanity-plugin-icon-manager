@@ -35,7 +35,7 @@ const createMyStore = () =>
 const AppStoreContext = createContext<StoreApi<AppStoreType> | null>(null)
 
 export function AppStoreContextProvider({children}: {children: ReactNode}): ReactNode {
-  const storeRef = useRef<StoreApi<AppStoreType>>()
+  const storeRef = useRef<StoreApi<AppStoreType> | undefined>(undefined)
   if (!storeRef.current) {
     storeRef.current = createMyStore()
   }

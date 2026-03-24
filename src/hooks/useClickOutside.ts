@@ -2,9 +2,9 @@ import {RefObject, useCallback, useEffect, useRef} from 'react'
 
 const useClickOutside = <T extends HTMLElement = HTMLElement>(
   cb: (event: Event) => void,
-): RefObject<T> => {
-  const ref = useRef<T>(null)
-  const refCB = useRef<(event: Event) => void>()
+): RefObject<T | null> => {
+  const ref = useRef<T | null>(null)
+  const refCB = useRef<(event: Event) => void | undefined>(undefined)
 
   const onClickOutsideHandler = useCallback(
     (event: Event) => {

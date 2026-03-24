@@ -3,9 +3,9 @@ import {createRef, RefObject, useCallback, useEffect, useRef} from 'react'
 const useClickOutsideMultiple = <T extends HTMLElement = HTMLElement>(
   cb: (event: Event) => void,
   numberOfRef: number,
-): RefObject<T>[] => {
+): RefObject<T | null>[] => {
   const els = Array.from(Array(numberOfRef).keys())
-  const refs = useRef<RefObject<T>[]>(els.map(() => createRef()))
+  const refs = useRef<Array<RefObject<T | null>>>(els.map(() => createRef<T>()))
   const refCB = useRef<(event: Event) => void>(cb)
 
   const onClickOutsideHandler = useCallback(
