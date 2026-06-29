@@ -4,29 +4,24 @@ const useClickOutside = <T extends HTMLElement = HTMLElement>(
   cb: (event: Event) => void,
 ): RefObject<T | null> => {
   const ref = useRef<T | null>(null)
-  const refCB = useRef<(event: Event) => void | undefined>(undefined)
+  const cbRef = useRef(cb)
+  cbRef.current = cb
 
-  const onClickOutsideHandler = useCallback(
-    (event: Event) => {
-      if (!ref.current || ref.current.contains(event.target as Node)) {
-        return
-      }
-      if (refCB.current) refCB.current(event)
-      else refCB.current = cb
-    },
-    [ref, refCB, cb],
-  )
+  const onClickOutsideHandler = useCallback((event: Event) => {
+    if (!ref.current || ref.current.contains(event.target as Node)) {
+      return
+    }
+    cbRef.current(event)
+  }, [])
 
   useEffect(() => {
-    if (ref.current) {
-      document.addEventListener('click', onClickOutsideHandler)
-      document.addEventListener('touchstart', onClickOutsideHandler)
-    }
+    document.addEventListener('click', onClickOutsideHandler)
+    document.addEventListener('touchstart', onClickOutsideHandler)
     return () => {
       document.removeEventListener('click', onClickOutsideHandler)
       document.removeEventListener('touchstart', onClickOutsideHandler)
     }
-  }, [ref, onClickOutsideHandler])
+  }, [onClickOutsideHandler])
 
   return ref
 }

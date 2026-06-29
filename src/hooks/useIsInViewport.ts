@@ -1,30 +1,35 @@
 /* eslint-disable no-undef */
 /* eslint-disable consistent-return */
-import {RefObject, useEffect, useRef, useState} from 'react'
+import {useCallback, useEffect, useRef, useState} from 'react'
 
 export default function useIsInViewport<T extends Element>(
   options: IntersectionObserverInit = {},
-): {ref: RefObject<T | null>; elementHitViewport: boolean} {
+): {ref: (node: T | null) => void; elementHitViewport: boolean} {
   const [elementHitViewport, setElementHitViewport] = useState(false)
-  const ref = useRef<T | null>(null)
+  const [element, setElement] = useState<T | null>(null)
+  const optionsRef = useRef(options)
+  optionsRef.current = options
+
+  const ref = useCallback((node: T | null) => {
+    setElement(node)
+  }, [])
 
   useEffect(() => {
-    if (elementHitViewport || !ref.current) return
+    if (elementHitViewport || !element) return
 
     const observer = new IntersectionObserver(([entry]) => {
       if (entry.isIntersecting) {
         setElementHitViewport(true)
         observer.disconnect()
       }
-    }, options)
+    }, optionsRef.current)
 
-    const element = ref.current
     observer.observe(element)
 
     return () => {
       observer.disconnect()
     }
-  }, [elementHitViewport, options])
+  }, [elementHitViewport, element])
 
   return {ref, elementHitViewport}
 }

@@ -1,0 +1,15 @@
+{
+  "name": "sanity-plugin-icon-manager-dev",
+  "private": true,
+  "scripts": {
+    "dev": "sanity dev",
+    "build": "sanity build"
+  },
+  "dependencies": {
+    "react": "^19.2.2",
+    "react-dom": "^19.2.2",
+    "sanity": "^6.2.0",
+    "sanity-plugin-icon-manager": "file:..",
+    "styled-components": "^6.1.15"
+  }
+}

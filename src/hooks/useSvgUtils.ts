@@ -25,19 +25,22 @@ export default function useSvgUtils(data: SvgData & {inlineSvg?: string}): Respo
   const [urls, setUrls] = useState<{url: string; downloadUrl: string}>()
 
   useEffect(() => {
-    const updateUrls = async () => {
-      setUrls(
-        await buildSvgUrls(iconifyEndpoint!, {
-          icon: data.icon,
-          size: data.size,
-          rotate: data.rotate,
-          hFlip: data.hFlip,
-          vFlip: data.vFlip,
-          color: data.color,
-        }),
-      )
+    let cancelled = false
+
+    const nextUrls = buildSvgUrls(iconifyEndpoint!, {
+      icon: data.icon,
+      size: data.size,
+      rotate: data.rotate,
+      hFlip: data.hFlip,
+      vFlip: data.vFlip,
+      color: data.color,
+    })
+
+    if (!cancelled) setUrls(nextUrls)
+
+    return () => {
+      cancelled = true
     }
-    updateUrls()
   }, [iconifyEndpoint, data.icon, data.size, data.rotate, data.hFlip, data.vFlip, data.color])
 
   const copy2Clipboard = async (isHtml: boolean) => {

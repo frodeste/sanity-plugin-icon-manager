@@ -1,5 +1,5 @@
 import {Flex, Text, Tooltip} from '@sanity/ui'
-import {ReactNode} from 'react'
+import {ReactNode, useMemo} from 'react'
 import {BlockProps} from 'sanity'
 
 import {IconManagerType} from '../../types/IconManagerType'
@@ -7,10 +7,8 @@ import IconPreview from '../IconPreview'
 
 export type IconManagerInlineBlockComponentProps = BlockProps & IconManagerType
 
-export default function IconManagerInlineBlockComponent(props: BlockProps): ReactNode {
-  const value = props.value as unknown as IconManagerType
-  const hasValidIcon = value.icon && value.metadata
-  const IconInlinePreview = () => (
+function IconInlinePreviewView({value}: {value: IconManagerType}): ReactNode {
+  return (
     <Tooltip
       portal
       placement='top'
@@ -37,9 +35,20 @@ export default function IconManagerInlineBlockComponent(props: BlockProps): Reac
       </div>
     </Tooltip>
   )
+}
+
+export default function IconManagerInlineBlockComponent(props: BlockProps): ReactNode {
+  const value = props.value as unknown as IconManagerType
+  const hasValidIcon = Boolean(value.icon && value.metadata)
+  const renderPreview = useMemo(() => {
+    if (!hasValidIcon) return props.renderPreview
+    return function IconInlinePreview() {
+      return <IconInlinePreviewView value={value} />
+    }
+  }, [hasValidIcon, value, props.renderPreview])
 
   return props.renderDefault({
     ...props,
-    renderPreview: hasValidIcon ? IconInlinePreview : props.renderPreview,
+    renderPreview,
   })
 }

@@ -6,29 +6,24 @@ const useClickOutsideMultiple = <T extends HTMLElement = HTMLElement>(
 ): RefObject<T | null>[] => {
   const els = Array.from(Array(numberOfRef).keys())
   const refs = useRef<Array<RefObject<T | null>>>(els.map(() => createRef<T>()))
-  const refCB = useRef<(event: Event) => void>(cb)
+  const cbRef = useRef(cb)
+  cbRef.current = cb
 
-  const onClickOutsideHandler = useCallback(
-    (event: Event) => {
-      if (refs?.current?.some((ref) => ref?.current?.contains(event.target as Node))) {
-        return
-      }
-      if (refCB.current) refCB.current(event)
-      else refCB.current = cb
-    },
-    [refs, refCB, cb],
-  )
+  const onClickOutsideHandler = useCallback((event: Event) => {
+    if (refs.current?.some((ref) => ref?.current?.contains(event.target as Node))) {
+      return
+    }
+    cbRef.current(event)
+  }, [])
 
   useEffect(() => {
-    if (refs.current) {
-      document.addEventListener('click', onClickOutsideHandler)
-      document.addEventListener('touchstart', onClickOutsideHandler)
-    }
+    document.addEventListener('click', onClickOutsideHandler)
+    document.addEventListener('touchstart', onClickOutsideHandler)
     return () => {
       document.removeEventListener('click', onClickOutsideHandler)
       document.removeEventListener('touchstart', onClickOutsideHandler)
     }
-  }, [refs, onClickOutsideHandler])
+  }, [onClickOutsideHandler])
 
   return [...refs.current]
 }
