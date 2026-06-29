@@ -43,7 +43,9 @@
     "lint-fix": "eslint --fix .",
     "prepublishOnly": "npm run build",
     "watch": "pkg-utils watch --strict",
-    "prepare": "husky"
+    "dev": "npm-run-all --parallel watch dev:studio",
+    "dev:studio": "npm --prefix dev run dev",
+    "prepare": "node -e \"process.exit(0)\""
   },
   "dependencies": {
     "@iconify/react": "^6.0.2",
@@ -93,9 +95,15 @@
     "styled-components": "^6.1.15"
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=22.12"
   },
+  "browserslist": "extends @sanity/browserslist-config",
   "overrides": {
     "conventional-changelog-conventionalcommits": ">= 8.0.0"
+  },
+  "sanityPlugin": {
+    "verifyPackage": {
+      "nodeEngine": false
+    }
   }
 }

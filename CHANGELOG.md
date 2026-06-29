@@ -10,6 +10,7 @@ All notable changes to this project will be documented in this file. See
 ### ⚠ BREAKING CHANGES
 
 - **Peers:** `sanity` ^5 or ^6, `react` / `react-dom` ^19.2.2, and `styled-components` ^6.1.15 (matches Sanity Studio 5 and 6). Projects on Sanity 3 / React 18 should stay on `sanity-plugin-icon-manager` 2.x.
+- **Node.js:** Studio dev/build requires Node.js **22.12+** (aligned with Sanity v6).
 - **Theming:** Styled-components now receive the full `@sanity/ui` theme (`useTheme()`); responsive icon-menu styles use CSS media queries from `theme.sanity.media` instead of a synthetic `mediaIndex` field.
 - **Iconify:** `@iconify/react` v6 no longer exposes `disableCache` / `enableCache`; custom-endpoint setup still uses `addAPIProvider`.
 

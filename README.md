@@ -33,11 +33,13 @@ Powered by [Iconify](https://iconify.design/)
 
 ## 🚨 Requirements
 
-- Node 18+
+- Node 22.12+ (for Studio dev/build; matches [Sanity v6](https://www.sanity.io/blog/sanity-studio-v6))
 - Sanity Studio 5 or 6
 - React 19.2+ and `styled-components` 6.x (aligned with [Sanity Studio](https://www.sanity.io/) peer dependencies)
 
 For internationalized plugin UI, follow [Internationalizing plugins UI](https://www.sanity.io/docs/internationalizing-plugins-ui).
+
+**Migration:** `sanity-plugin-icon-manager` 2.x targets Sanity Studio 3. Version 3.x requires Sanity Studio **5 or 6** with React 19.2 and `styled-components` 6.x.
 
   <br /><br />
 
@@ -677,8 +679,27 @@ const MyComponent = (props) => {
 This plugin uses [@sanity/plugin-kit](https://github.com/sanity-io/plugin-kit)
 with default configuration for build & watch scripts.
 
-See [Testing a plugin in Sanity Studio](https://github.com/sanity-io/plugin-kit#testing-a-plugin-in-sanity-studio)
-on how to run this plugin with hotreload in the studio.
+### Local Sanity 6 studio
+
+A dev workspace lives in [`dev/`](dev/). It links the plugin via `file:..` and includes a test document schema.
+
+```sh
+npm install
+npm run build
+cd dev && npm install
+cp .env.example .env   # set SANITY_STUDIO_PROJECT_ID and SANITY_STUDIO_DATASET
+npm run dev
+```
+
+For plugin hot reload while developing:
+
+```sh
+npm run dev   # runs pkg-utils watch and the dev studio in parallel
+```
+
+See [`dev/SMOKE_TEST.md`](dev/SMOKE_TEST.md) for the manual verification checklist before release.
+
+See also [Testing a plugin in Sanity Studio](https://github.com/sanity-io/plugin-kit#testing-a-plugin-in-sanity-studio).
 
 ### Release new version
 
